@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "702441221627",
+    "firebase_url": "https://kds-app-1.firebaseio.com",
+    "project_id": "kds-app-1",
+    "storage_bucket": "kds-app-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702441221627:android:57c826e045d3fb70",
+        "android_client_info": {
+          "package_name": "com.fairyfalls.kds"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "702441221627-k9590jp73c4o4c8pcc5usv2ojpotnces.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYAat9rpltCD-aGyM9W72FWLmv8rYhghg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

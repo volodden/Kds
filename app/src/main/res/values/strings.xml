@@ -20,4 +20,5 @@
     <string name="auth_failed">Authentication failed</string>
     <string name="registration">Войдите в аккаунт или зарегистрируйтесь</string>
     <string name="firebaseui_title_text">FirebaseUI Auth</string>
+    <string name="buttonExit">Exit</string>
 </resources>

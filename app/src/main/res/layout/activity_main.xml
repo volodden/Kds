@@ -24,6 +24,13 @@
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/title_home" />
 
+        <Button
+            android:id="@+id/buttonExit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickExit"
+            android:text="@string/buttonExit" />
+
     </FrameLayout>
 
     <android.support.design.widget.BottomNavigationView

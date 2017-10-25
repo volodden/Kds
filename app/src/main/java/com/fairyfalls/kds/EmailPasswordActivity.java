@@ -28,7 +28,7 @@ public class EmailPasswordActivity extends BaseActivity implements
     final EmailPasswordActivity thisActivity = this;
 
     // [START declare_auth]
-    private FirebaseAuth mAuth;
+    protected FirebaseAuth mAuth;
     // [END declare_auth]
 
     @Override

@@ -33,7 +33,7 @@
 
     <style name="ThemeOverlay.MyTitleText" parent="AppTheme">
         <item name="android:gravity">center</item>
-        <item name="android:textSize">36sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="ThemeOverlay.MyDarkButton" parent="ThemeOverlay.AppCompat.Dark">

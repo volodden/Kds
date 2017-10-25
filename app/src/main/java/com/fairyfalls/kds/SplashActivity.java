@@ -74,7 +74,7 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
             time = 0;
-            Intent intent = new Intent(thisActivity, MainActivity.class);
+            Intent intent = new Intent(thisActivity, EmailPasswordActivity.class);
             startActivity(intent);
             thisActivity.finish();
         }

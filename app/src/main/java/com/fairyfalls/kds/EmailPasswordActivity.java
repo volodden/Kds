@@ -1,8 +1,10 @@
 package com.fairyfalls.kds;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +16,17 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
-public class EmailPasswordActivity extends BaseActivity implements
+public class EmailPasswordActivity extends AppCompatActivity implements
         View.OnClickListener {
 
     private static final String TAG = "EmailPassword";
 
-    private TextView mStatusTextView;
     private EditText mEmailField;
     private EditText mPasswordField;
 
@@ -29,13 +34,30 @@ public class EmailPasswordActivity extends BaseActivity implements
     protected FirebaseAuth mAuth;
     // [END declare_auth]
 
+    public ProgressDialog mProgressDialog;
+
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setMessage(getString(R.string.loading));
+            mProgressDialog.setIndeterminate(true);
+        }
+
+        mProgressDialog.show();
+    }
+
+    public void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_activity);
 
         // Views
-        mStatusTextView = (TextView) findViewById(R.id.status);
         mEmailField = (EditText) findViewById(R.id.field_email);
         mPasswordField = (EditText) findViewById(R.id.field_password);
 
@@ -76,14 +98,23 @@ public class EmailPasswordActivity extends BaseActivity implements
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            //Intent intent = new Intent(Email, MainActivity.class);
-                            //startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthUserCollisionException  e) {
+                                Toast.makeText(EmailPasswordActivity.this, R.string.collusion_exeption,
+                                        Toast.LENGTH_SHORT).show();
+                            } catch(FirebaseAuthWeakPasswordException  e) {
+                                Toast.makeText(EmailPasswordActivity.this, R.string.weak_password_exeption,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                            catch(Exception e) {
+                                Toast.makeText(EmailPasswordActivity.this, task.getException().toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+
                         }
 
                         // [START_EXCLUDE]
@@ -112,33 +143,31 @@ public class EmailPasswordActivity extends BaseActivity implements
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                            updateUI(user);
-                           // Intent intent = new Intent(thisActivity, MainActivity.class);
-                            //startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                Toast.makeText(EmailPasswordActivity.this, R.string.credential_exeption,
+                                        Toast.LENGTH_SHORT).show();
+                            } catch(FirebaseAuthInvalidUserException e) {
+                                Toast.makeText(EmailPasswordActivity.this, R.string.invalid_user_exeption,
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                              catch(Exception e) {
+                                Toast.makeText(EmailPasswordActivity.this, task.getException().toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
                         }
 
                         // [START_EXCLUDE]
-                        if (!task.isSuccessful()) {
-                            mStatusTextView.setText(R.string.auth_failed);
-                        }
                         hideProgressDialog();
                         // [END_EXCLUDE]
                     }
                 });
         // [END sign_in_with_email]
     }
-
-    private void signOut() {
-        mAuth.signOut();
-        updateUI(null);
-    }
-
-
 
     private boolean validateForm() {
         boolean valid = true;
@@ -170,11 +199,6 @@ public class EmailPasswordActivity extends BaseActivity implements
             startActivity(intent);
             finish();
 
-        } else {
-            mStatusTextView.setText(R.string.signed_out);
-
-            findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
-            findViewById(R.id.email_password_fields).setVisibility(View.VISIBLE);
         }
     }
 

@@ -12,12 +12,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/app_name"
-        android:gravity="center_horizontal"/>
+    
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"

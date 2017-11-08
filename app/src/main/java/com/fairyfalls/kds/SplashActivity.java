@@ -15,7 +15,6 @@ public class SplashActivity extends AppCompatActivity {
     private final int maxTime = 2;
     static final String START_TIME = "time";
     private MyCountDownTimer timer =null;
-    final SplashActivity thisActivity = this;
 
 
     @Override
@@ -74,9 +73,9 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
             time = 0;
-            Intent intent = new Intent(thisActivity, EmailPasswordActivity.class);
+            Intent intent = new Intent(SplashActivity.this, EmailPasswordActivity.class);
             startActivity(intent);
-            thisActivity.finish();
+            SplashActivity.this.finish();
         }
     }
 }

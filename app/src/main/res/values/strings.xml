@@ -13,9 +13,14 @@
     <string name="emailpassword_title_text">Введите арес электронной почты и пароль для входа приложения или регистрации нового аккаунта</string>
     <string name="signed_out">Вы не аутентифицированны</string>
     <string name="auth_failed">Аутентификация не удалась</string>
-    <string name="registration">Войдите в аккаунт или создайте</string>
+    <string name="registration">Войдите в аккаунт или создайте его</string>
     <string name="buttonExit">Выход</string>
     <string name="required_email">Введите email</string>
     <string name="required_password">Введите пароль</string>
     <string name="settings">Настройки</string>
+    <string name="credential_exeption">Неверный логин или пароль</string>
+    <string name="exeption">Ошибка</string>
+    <string name="invalid_user_exeption">Пользователя с таким именем не существует или он был удален</string>
+    <string name="collusion_exeption">Имя пользователя уже занято</string>
+    <string name="weak_password_exeption">Слабый пароль (минимум 6 символов)</string>
 </resources>

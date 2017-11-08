@@ -22,10 +22,8 @@ public class EmailPasswordActivity extends BaseActivity implements
     private static final String TAG = "EmailPassword";
 
     private TextView mStatusTextView;
-    private TextView mDetailTextView;
     private EditText mEmailField;
     private EditText mPasswordField;
-    final EmailPasswordActivity thisActivity = this;
 
     // [START declare_auth]
     protected FirebaseAuth mAuth;
@@ -38,15 +36,12 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         // Views
         mStatusTextView = (TextView) findViewById(R.id.status);
-        mDetailTextView = (TextView) findViewById(R.id.detail);
         mEmailField = (EditText) findViewById(R.id.field_email);
         mPasswordField = (EditText) findViewById(R.id.field_password);
 
         // Buttons
         findViewById(R.id.email_sign_in_button).setOnClickListener(this);
         findViewById(R.id.email_create_account_button).setOnClickListener(this);
-        findViewById(R.id.sign_out_button).setOnClickListener(this);
-        findViewById(R.id.verify_email_button).setOnClickListener(this);
 
         // [START initialize_auth]
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +76,7 @@ public class EmailPasswordActivity extends BaseActivity implements
                             Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            //Intent intent = new Intent(thisActivity, MainActivity.class);
+                            //Intent intent = new Intent(Email, MainActivity.class);
                             //startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -143,43 +138,14 @@ public class EmailPasswordActivity extends BaseActivity implements
         updateUI(null);
     }
 
-    private void sendEmailVerification() {
-        // Disable button
-        findViewById(R.id.verify_email_button).setEnabled(false);
 
-        // Send verification email
-        // [START send_email_verification]
-        final FirebaseUser user = mAuth.getCurrentUser();
-        user.sendEmailVerification()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        // [START_EXCLUDE]
-                        // Re-enable button
-                        findViewById(R.id.verify_email_button).setEnabled(true);
-
-                        if (task.isSuccessful()) {
-                            Toast.makeText(EmailPasswordActivity.this,
-                                    "Verification email sent to " + user.getEmail(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e(TAG, "sendEmailVerification", task.getException());
-                            Toast.makeText(EmailPasswordActivity.this,
-                                    "Failed to send verification email.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END send_email_verification]
-    }
 
     private boolean validateForm() {
         boolean valid = true;
 
         String email = mEmailField.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            mEmailField.setError("Required.");
+            mEmailField.setError("Введите Email");
             valid = false;
         } else {
             mEmailField.setError(null);
@@ -187,7 +153,7 @@ public class EmailPasswordActivity extends BaseActivity implements
 
         String password = mPasswordField.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            mPasswordField.setError("Required.");
+            mPasswordField.setError("Введите пароль");
             valid = false;
         } else {
             mPasswordField.setError(null);
@@ -200,17 +166,15 @@ public class EmailPasswordActivity extends BaseActivity implements
         hideProgressDialog();
         if (user != null) {
 
-            Intent intent = new Intent(thisActivity, MainActivity.class);
+            Intent intent = new Intent(EmailPasswordActivity.this, MainActivity.class);
             startActivity(intent);
             finish();
 
         } else {
             mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
 
             findViewById(R.id.email_password_buttons).setVisibility(View.VISIBLE);
             findViewById(R.id.email_password_fields).setVisibility(View.VISIBLE);
-            findViewById(R.id.signed_in_buttons).setVisibility(View.GONE);
         }
     }
 
@@ -221,10 +185,6 @@ public class EmailPasswordActivity extends BaseActivity implements
             createAccount(mEmailField.getText().toString(), mPasswordField.getText().toString());
         } else if (i == R.id.email_sign_in_button) {
             signIn(mEmailField.getText().toString(), mPasswordField.getText().toString());
-        } else if (i == R.id.sign_out_button) {
-            signOut();
-        } else if (i == R.id.verify_email_button) {
-            sendEmailVerification();
         }
     }
 }

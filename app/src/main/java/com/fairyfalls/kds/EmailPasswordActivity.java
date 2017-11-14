@@ -109,6 +109,9 @@ public class EmailPasswordActivity extends AppCompatActivity implements
                             } catch(FirebaseAuthWeakPasswordException  e) {
                                 Toast.makeText(EmailPasswordActivity.this, R.string.weak_password_exeption,
                                         Toast.LENGTH_SHORT).show();
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                Toast.makeText(EmailPasswordActivity.this, R.string.credential_auth_exeption,
+                                        Toast.LENGTH_SHORT).show();
                             }
                             catch(Exception e) {
                                 Toast.makeText(EmailPasswordActivity.this, task.getException().toString(),

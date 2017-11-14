@@ -19,6 +19,7 @@
     <string name="required_password">Введите пароль</string>
     <string name="settings">Настройки</string>
     <string name="credential_exeption">Неверный логин или пароль</string>
+    <string name="credential_auth_exeption">Неверный формат электронной почты</string>
     <string name="exeption">Ошибка</string>
     <string name="invalid_user_exeption">Пользователя с таким именем не существует или он был удален</string>
     <string name="collusion_exeption">Имя пользователя уже занято</string>

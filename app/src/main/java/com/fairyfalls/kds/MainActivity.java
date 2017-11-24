@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
-
     //Создаем bar-меню
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,7 +73,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
 }
-
-
